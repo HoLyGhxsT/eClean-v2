@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:eclean/authentication.dart';
-import 'package:eclean/home.dart';
+import 'package:eclean/utils/authentication.dart';
+import 'package:eclean/pages/home.dart';
 
 class Signup extends StatelessWidget {
   @override

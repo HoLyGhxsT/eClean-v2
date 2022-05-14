@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:eclean/authentication.dart';
-import 'package:eclean/home.dart';
-import 'package:eclean/signup.dart';
+import 'package:eclean/utils/authentication.dart';
+import 'package:eclean/pages/home.dart';
+import 'package:eclean/pages/signup.dart';
+
+import '../utils/Constants.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -146,9 +148,7 @@ class _LoginFormState extends State<LoginForm> {
             height: 54,
             width: 184,
             child: ElevatedButton(
-              onPressed: () {
-                // Respond to button press
-
+              onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
 
@@ -156,6 +156,7 @@ class _LoginFormState extends State<LoginForm> {
                       .signIn(email: email!, password: password!)
                       .then((result) {
                     if (result == null) {
+                      Constants.prefs.setBool("loggedIn", true);
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) => Home()));
                     } else {

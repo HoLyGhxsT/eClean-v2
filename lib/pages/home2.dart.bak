@@ -11,29 +11,6 @@ class Home extends StatelessWidget {
           child: Text('Welcome'),
         ),
       ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           AuthenticationHelper()
