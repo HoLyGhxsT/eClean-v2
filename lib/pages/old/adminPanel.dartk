@@ -1,0 +1,35 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+
+class Admin extends StatelessWidget {
+  const Admin({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('hi')),
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance.collection("users").snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, i) {
+                  return Container(
+                    width: 200,
+                    height: 100,
+                    margin: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                    color: Colors.lightGreen,
+                    child: Column(children: [
+                      Text("Name:" + snapshot.data!.docs[i]['email'])
+                    ]),
+                  );
+                });
+          } else {
+            return CircularProgressIndicator();
+          }
+        },
+      ),
+    );
+  }
+}

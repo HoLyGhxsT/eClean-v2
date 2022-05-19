@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:eclean/utils/authentication.dart';
 import 'package:eclean/pages/home.dart';
@@ -219,11 +221,18 @@ class _SignupFormState extends State<SignupForm> {
                   _formKey.currentState!.save();
 
                   AuthenticationHelper()
-                      .signUp(email: email!, password: password!)
-                      .then((result) {
+                      .signUp(email: email!, password: password!, role: 'user')
+                      .then((result) async{
                     if (result == null) {
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) => Home()));
+                          User? user = FirebaseAuth.instance.currentUser;
+                          await FirebaseFirestore.instance.collection("users").doc(user!.uid).set({
+                          'uid': user.uid,
+                          'email': email,
+                          'password': password,
+                          'role': 'user',
+                        });
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text(
